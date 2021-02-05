@@ -1,0 +1,12 @@
+# Ignore all
+*
+# Unignore all files with extentions
+!*.*
+# Unignore dirs
+!*/
+
+### Above combination will ignore all files without extension ###
+
+test*
+
+.DS_STORE
