@@ -7,6 +7,11 @@
 
 ### Above combination will ignore all files without extension ###
 
+# Compiled files
+*.out
+
+# Tests
 test*
 
+# System files
 .DS_STORE
