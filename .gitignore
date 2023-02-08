@@ -7,6 +7,10 @@
 
 ### Above combination will ignore all files without extension ###
 
+# Submission files
+/handinFiles
+*.zip
+
 # Compiled files
 *.out
 
