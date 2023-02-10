@@ -5,7 +5,7 @@
  * OpenMP
  *
  * @note |
- * Compile: `clang -fopenmp -o quickSort-omp quickSort-omp.c`
+ * Compile: `clang -O -fopenmp -o quickSort-omp quickSort-omp.c`
  * Execute: `./quickSort-omp <size?: number> <numWorkers?: number>`
  */
 
@@ -80,15 +80,16 @@ int main(int argc, char* argv[]) {
         end_time = omp_get_wtime();
         times[run] = end_time - start_time;
       }
-      if (evalSort(localSize))
-        printf("Array is verified sorted\n");
-      else
+      if (!evalSort(localSize)) {
         printf("Array could not be verified as sorted\n");
-      printf("The median execution time is %gs on size %d with %d threads\n\n",
+        goto kill;
+      }
+      printf("The median execution time is %gs on size %d with %d threads\n",
              medianTime(times, RUNS), localSize, threads);
     }
+    printf("\n");
   }
-
+kill:;
   // printArray(-1);
 }
 

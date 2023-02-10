@@ -5,7 +5,7 @@
  * minimum values and calculates the total of all elements using OpenMP
  *
  * @note |
- * Compile: `clang -fopenmp -o matrixSum-omp matrixSum-omp.c`
+ * Compile: `clang -O -fopenmp -o matrixSum-omp matrixSum-omp.c`
  * Execute: `./matrixSum-omp <size?: number> <numWorkers?: number>`
  */
 
