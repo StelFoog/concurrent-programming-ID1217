@@ -7,6 +7,9 @@
 
 ### Above combination will ignore all files without extension ###
 
+# Unignore makefiles
+!Makefile
+
 # Submission files
 /handinFiles
 *.zip
