@@ -36,6 +36,8 @@ public class Sequential {
 	static final int BODY_MASS = 10;
 	static int gnumBodies;
 	static int numSteps;
+	static int printBodies;
+	static int printNumBodies;
 	Body[] bodies;
 
 	public Sequential() {
@@ -78,18 +80,34 @@ public class Sequential {
 		}
 	}
 
-	public static int parseArg(String[] args, int index, int maximum) {
+	public void printBodies(String title) {
+		if (printBodies == 0)
+			return;
+		System.out.println("\n" + title);
+		for (int i = 0; i < printNumBodies; i++)
+			System.out.format("Body #%d\n  x = %f\n  y = %f\n", i + 1, bodies[i].posX, bodies[i].posY);
+	}
+
+	public static int parseArg(String[] args, int index, int max, int fallback, int min) {
 		if (args.length < index + 1)
-			return maximum;
+			return fallback;
 		int val = Integer.parseInt(args[index]);
-		return (val > maximum || val < 1) ? maximum : val;
+		return (val > max || val < min) ? max : val;
 	}
 
 	public static void main(String[] args) {
-		gnumBodies = parseArg(args, 0, MAX_BODIES);
-		numSteps = parseArg(args, 1, MAX_STEPS);
+		gnumBodies = parseArg(args, 0, MAX_BODIES, MAX_BODIES, 1);
+		numSteps = parseArg(args, 1, MAX_STEPS, MAX_STEPS, 1);
+		printBodies = parseArg(args, 2, 1, 0, 0);
+		printNumBodies = parseArg(args, 3, gnumBodies, 5, 1);
+
+		System.out.println("gnumBodies = " + gnumBodies);
+		System.out.println("numSteps = " + numSteps);
+		System.out.println("printBodies = " + printBodies);
+		System.out.println("printNumBodies = " + printNumBodies);
 
 		Sequential nBodies = new Sequential();
+		nBodies.printBodies("Starting body positions:");
 
 		long start = System.nanoTime();
 		for (int i = 0; i < numSteps; i++) {
@@ -98,6 +116,7 @@ public class Sequential {
 		}
 		long time = System.nanoTime() - start;
 
+		nBodies.printBodies("Final body positions:");
 		System.out.println("Done in " + time * Math.pow(10, -9) + "s");
 	}
 }
