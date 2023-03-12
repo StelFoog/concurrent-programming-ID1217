@@ -68,7 +68,7 @@ public class Parallel {
 	static final int MAX_BODIES = 240;
 	static final int MAX_STEPS = 500000;
 	static final int MAX_WORKERS = 4;
-	static final int BODY_MASS = 10;
+	static final int BODY_MASS = 2;
 	static int gnumBodies;
 	static int numSteps;
 	static int numWorkers;
@@ -80,7 +80,7 @@ public class Parallel {
 		bodies = new Body[gnumBodies];
 		Random rand = new Random();
 		for (int i = 0; i < gnumBodies; i++) {
-			bodies[i] = new Body(rand.nextDouble() * 10, rand.nextDouble() * 10, BODY_MASS, numWorkers);
+			bodies[i] = new Body(rand.nextDouble() * 10 - 5, rand.nextDouble() * 10 - 5, BODY_MASS, numWorkers);
 		}
 	}
 
