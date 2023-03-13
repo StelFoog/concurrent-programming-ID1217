@@ -16,11 +16,9 @@ public class SequentialBH {
 
 		public boolean contains(double x, double y) {
 			double halfLength = len / 2.0;
-			if (midX - halfLength > x || midX + halfLength < x)
-				return false;
-			if (midY - halfLength > y || midY + halfLength < y)
-				return false;
-			return true;
+			boolean isInX = midX - halfLength <= x && x <= midX + halfLength;
+			boolean isInY = midY - halfLength <= y && y <= midY + halfLength;
+			return isInX && isInY;
 		}
 
 		public Quad tL() {
@@ -89,15 +87,10 @@ public class SequentialBH {
 		}
 
 		public void move() {
-			double dVelX = this.forceX / this.mass * DT;
-			double dVelY = this.forceY / this.mass * DT;
-			double dPosX = (this.velX + dVelX / 2) * DT;
-			double dPosY = (this.velY + dVelY / 2) * DT;
-
-			this.velX += dVelX;
-			this.velY += dVelY;
-			this.posX += dPosX;
-			this.posY += dPosY;
+			this.velX += this.forceX / this.mass * DT;
+			this.velY += this.forceY / this.mass * DT;
+			this.posX += this.velX * DT;
+			this.posY += this.velY * DT;
 		}
 	}
 
@@ -178,7 +171,7 @@ public class SequentialBH {
 	static final double DT = 1;
 	static final int MAX_BODIES = 240;
 	static final int MAX_STEPS = 500000;
-	static final double DEFAULT_FAR = 5;
+	static final double DEFAULT_FAR = 0.5;
 	static final int BODY_MASS = 2;
 	static int gnumBodies;
 	static int numSteps;
@@ -194,7 +187,7 @@ public class SequentialBH {
 			if (localMax > max)
 				max = localMax;
 		}
-		return (max * 1.001) * 2;
+		return (max + 0.01) * 2;
 	}
 
 	public static void printBodies(String title) {
@@ -218,7 +211,6 @@ public class SequentialBH {
 		far = args.length < 3 ? DEFAULT_FAR : Double.parseDouble(args[2]);
 		printBodies = parseArg(args, 3, 1, 0, 0);
 		printNumBodies = parseArg(args, 4, gnumBodies, 5, 1);
-
 		System.out.println("gnumBodies = " + gnumBodies);
 		System.out.println("numSteps = " + numSteps);
 		System.out.println("far = " + far);
@@ -234,7 +226,6 @@ public class SequentialBH {
 		long start = System.nanoTime();
 		for (int step = 0; step < numSteps; step++) {
 			Quad q = new Quad(0, 0, findRootLen());
-
 			BHTree tree = new BHTree(q);
 			for (int i = 0; i < gnumBodies; i++)
 				tree.insert(bodies[i]);

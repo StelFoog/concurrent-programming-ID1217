@@ -45,19 +45,14 @@ public class Parallel {
 			} catch (BrokenBarrierException e) {
 				System.err.println("Broken!");
 			}
-
 		}
 
 		@Override
 		public void run() {
 			for (int i = 0; i < numSteps; i++) {
-				// System.out.println("Run nr: " + i);
 				Parallel.this.calculateForces(id);
-				// System.out.println("Calc nr: " + i);
 				await();
-				// System.out.println("Wait nr: " + i);
 				Parallel.this.moveBodies(id);
-				// System.out.println("Move nr: " + i);
 				await();
 			}
 		}
