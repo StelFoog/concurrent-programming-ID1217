@@ -203,7 +203,6 @@ public class ParallelBH {
 			for (int step = 0; step < numSteps; step++) {
 				if (id == 0) {
 					tree.reset();
-					// tree = new BHTree(new Quad(0, 0, findRootLen()));
 					for (int i = 0; i < gnumBodies; i++)
 						tree.insert(bodies[i]);
 				}
